@@ -2,56 +2,60 @@
 using Application.Interfaces;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace API.Controllers
 {
     [Authorize]
     [ApiController]
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/products")]
-    public class ProductController : ControllerBase
+    [Route("api/v{version:apiVersion}/items")]
+    public class ItemController : ControllerBase
     {
-        private readonly IProductService _service;
+        private readonly IItemService _service;
 
-        public ProductController(IProductService service)
+        public ItemController(IItemService service)
         {
             _service = service;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(int pageNumber = 1, int pageSize = 10)
+        public async Task<IActionResult> GetAll(
+            int pageNumber = 1,
+            int pageSize = 10)
         {
-            var products = await _service.GetAllAsync(pageNumber, pageSize);
+            var items = await _service.GetAllAsync(pageNumber, pageSize);
 
-            return Ok(products);
+            return Ok(items);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var product = await _service.GetByIdAsync(id);
+            var item = await _service.GetByIdAsync(id);
 
-            if (product == null)
+            if (item == null)
                 return NotFound();
 
-            return Ok(product);
+            return Ok(item);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateProductDto dto)
+        public async Task<IActionResult> Create(CreateItemDto dto)
         {
             var result = await _service.CreateAsync(dto);
 
-            return CreatedAtAction(nameof(GetById),
+            return CreatedAtAction(
+                nameof(GetById),
                 new { id = result.Id },
                 result);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, UpdateProductDto dto)
+        public async Task<IActionResult> Update(
+            int id,
+            UpdateItemDto dto)
         {
             var updated = await _service.UpdateAsync(id, dto);
 

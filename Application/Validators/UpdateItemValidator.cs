@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.DTOs
+namespace Application.Validators
 {
-    public class CreateProductDto
+    internal class UpdateItemValidator
     {
-        public string ProductName { get; set; }
     }
 }

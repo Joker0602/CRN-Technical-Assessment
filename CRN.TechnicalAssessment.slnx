@@ -1,4 +1,8 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="../Learnex/Learnex/Dockerfile" />
+    <File Path="docker-compose.yml" />
+  </Folder>
   <Folder Name="/src/">
     <Project Path="API/API.csproj" />
     <Project Path="Application/Application.csproj" />

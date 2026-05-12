@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace Application.DTOs
 {
-    internal class ProductDto
+    public class ProductDto
     {
+        public int Id { get; set; }
+
+        public string ProductName { get; set; } = string.Empty;
+
+        public string CreatedBy { get; set; } = string.Empty;
+
+        public DateTime CreatedOn { get; set; }
     }
 }
