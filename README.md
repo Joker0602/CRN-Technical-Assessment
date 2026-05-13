@@ -1,6 +1,6 @@
 # CRN Technical Assessment API
 
-A clean architecture ASP.NET Core Web API with JWT authentication, Entity Framework Core, Docker support, and CI/CD via GitHub Actions.
+A clean architecture ASP.NET Core Web API with JWT authentication, Entity Framework Core, Docker support.
 
 ---
 
@@ -180,36 +180,6 @@ Sets `ASPNETCORE_ENVIRONMENT=Production`, starts SQL Server container, and appli
 |---|---|---|
 | `api` | `80` | ASP.NET Core Web API |
 | `sqlserver` | `1433` | SQL Server 2022 |
-
----
-
-## CI/CD Pipeline
-
-The GitHub Actions workflow (`.github/workflows/deploy.yml`) triggers on every push to `master`:
-
-```
-git push → master
-       ↓
-Build Docker image
-       ↓
-Push to Docker Hub
-       ↓
-SSH into server → docker compose up
-       ↓
-Production environment live ✅
-```
-
-### Required GitHub Secrets
-
-Go to **Settings → Secrets and variables → Actions** and add:
-
-| Secret | Description |
-|---|---|
-| `DOCKER_USERNAME` | Docker Hub username |
-| `DOCKER_PASSWORD` | Docker Hub password |
-| `SERVER_HOST` | Production server IP or domain |
-| `SERVER_USER` | SSH username (e.g. `ubuntu`) |
-| `SERVER_SSH_KEY` | Private SSH key for server access |
 
 ---
 
