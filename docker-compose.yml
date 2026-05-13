@@ -1,31 +1,27 @@
-﻿services:
+﻿version: '3.8'
 
-  sqlserver:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: sqlserver
-
-    environment:
-      ACCEPT_EULA: "Y"
-      SA_PASSWORD: "Your_password123"
-
-    ports:
-      - "1433:1433"
-
-
+services:
   api:
     build:
       context: .
       dockerfile: API/Dockerfile
-
-    container_name: crn-api
-
     ports:
-      - "8080:80"
-
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:80
-      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=CRNDb;User Id=sa;Password=Your_password123;TrustServerCertificate=True;
-
+      - "5000:8080"
     depends_on:
-      - sqlserver
+      sqlserver:
+        condition: service_healthy
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=CRNDb;User Id=sa;Password=Omee@123;TrustServerCertificate=True;
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      SA_PASSWORD: "Omee@123"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P 'Omee@123' -Q 'SELECT 1' -C || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10

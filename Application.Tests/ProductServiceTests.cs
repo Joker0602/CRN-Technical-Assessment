@@ -1,14 +1,9 @@
 ﻿using Application.DTOs;
 using Application.Interfaces;
+using Application.Services;
 using Domain.Entities;
 using FluentAssertions;
-using Infrastructure.Services;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Tests
 {

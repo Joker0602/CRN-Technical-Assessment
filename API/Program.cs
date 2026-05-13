@@ -7,7 +7,6 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
-using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -135,7 +134,9 @@ builder.Services.AddAuthentication(
 builder.Services.AddAuthorization();
 
 // Build App
-builder.WebHost.UseUrls("http://0.0.0.0:80");
+builder.WebHost.UseUrls("http://0.0.0.0:8080");
+
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -157,7 +158,10 @@ app.UseMiddleware<ExceptionMiddleware>();
 
 
 // HTTPS
-//app.UseHttpsRedirection();
+if (app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 
 
 // Security Headers
